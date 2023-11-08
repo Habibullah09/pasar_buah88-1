@@ -53,7 +53,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+                Aktivitas
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -77,7 +77,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Addons
+                Setting
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
