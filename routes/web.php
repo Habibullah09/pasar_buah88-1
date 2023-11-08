@@ -14,9 +14,26 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
 Route::get('/master', function () {
     return view('layout.master');
 });
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+Route::get('/order', function () {
+    return view('order');
+});
+Route::get('/mutasi', function () {
+    return view('mutasi');
+});
+Route::get('/akun', function () {
+    return view('akun');
+});
+Route::get('/stok', function () {
+    return view('stok');
+});
+
+
 
