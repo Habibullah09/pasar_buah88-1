@@ -23,10 +23,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 Route::get('/order', function () {
-    return view('order');
+    return view('lapangan.order');
 });
 Route::get('/mutasi', function () {
-    return view('mutasi');
+    return view('lapangan.mutasi');
 });
 Route::get('/akun', function () {
     return view('akun');
