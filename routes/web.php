@@ -32,7 +32,7 @@ Route::get('/akun', function () {
     return view('akun');
 });
 Route::get('/stok', function () {
-    return view('stok');
+    return view('stok_barang');
 });
 
 
