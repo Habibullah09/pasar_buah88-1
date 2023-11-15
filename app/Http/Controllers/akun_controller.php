@@ -85,7 +85,7 @@ class akun_controller extends Controller
             $data=User::paginate(5);
         } else {
             $filter=auth()->user()->name;
-            $data=User::where('name',$filter)->get();
+            $data=User::where('name',$filter)->paginate(5);
         }
         return view('akun',compact('data','akun'));
     }
