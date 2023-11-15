@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\stok_barang_controller;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\akun_controller;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('login');
 });
 Route::get('/master', function () {
     return view('layout.master');
@@ -28,12 +34,24 @@ Route::get('/order', function () {
 Route::get('/mutasi', function () {
     return view('lapangan.mutasi');
 });
-Route::get('/akun', function () {
-    return view('akun');
+Route::get('/login', function () {
+    return view('login');
 });
-Route::get('/stok', function () {
-    return view('stok_barang');
-});
+
+
+//stok_barang
+Route::resource('/stok_barang', stok_barang_controller::class);
+
+//login
+Route::post('/postlogin', [AuthController::class, 'postlogin']);
+Route::get('/logout', [AuthController::class, 'logout']);
+
+//stok_barang
+Route::resource('/akun', akun_controller::class);
+
+
+
+
 
 
 

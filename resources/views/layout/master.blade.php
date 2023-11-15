@@ -19,6 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('asset/css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{asset('asset/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 
 </head>
 
@@ -57,23 +58,37 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
+             @if(auth()->user()->role == 'Staff Lapangan' || auth()->user()->role == 'Supervisor IT')
             <li class="nav-item">
                 <a class="nav-link" href="/order">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Order</span></a>
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Order Barang</span></a>
             </li>
 
-             <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link" href="/mutasi">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Mutasi</span></a>
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Mutasi Lapangan</span></a>
+            </li>
+            @endif
+            @if(auth()->user()->role == 'Staff Gudang' || auth()->user()->role == 'Supervisor IT')
+            <li class="nav-item">
+                <a class="nav-link" href="/mutasi">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Mutasi Gudang</span></a>
+            </li>
+            @endif
+            <li class="nav-item">
+                <a class="nav-link" href="/mutasi">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Terima Mutasi</span></a>
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="/stok">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Stok Barang </span></a>
+                <a class="nav-link" href="{{ url('/stok_barang') }}">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>Stok Barang </span></a>
             </li>
 
 
@@ -87,7 +102,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
              <li class="nav-item">
-                <a class="nav-link" href="/akun">
+                <a class="nav-link" href="{{ url('/akun') }}">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Akun</span></a>
             </li>
@@ -156,14 +171,14 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Lapangan</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{auth()->user()->role}}</span>
                                 <img class="img-profile rounded-circle"
                                     src="{{asset('asset/img/undraw_profile.svg')}}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="url('/login')" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -213,15 +228,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Yakin Akan Logout?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Pilih "Logout" di bawah jika Anda siap untuk mengakhiri sesi Anda saat ini.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="/logout">Logout</a>
                 </div>
             </div>
         </div>
@@ -243,6 +258,12 @@
     <!-- Page level custom scripts -->
     <script src="{{asset('asset/js/demo/chart-area-demo.js')}}"></script>
     <script src="{{asset('asset/js/demo/chart-pie-demo.js')}}"></script>
+    
+    <!-- <script src="{{asset('asset/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('asset/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script> -->
+
+    <!-- Page level custom scripts -->
+    <script src="{{asset('asset/js/demo/datatables-demo.js')}}"></script>
 
 </body>
 
