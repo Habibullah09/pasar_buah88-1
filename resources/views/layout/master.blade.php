@@ -33,10 +33,7 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-2">Pasar Buah <sup>88</sup></div>
+                <div class="sidebar-brand-text mx-2"><img src="{{ asset('asset/img/logo.png')}}" width="100%"></div>
             </a>
 
             <!-- Divider -->

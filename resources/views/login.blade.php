@@ -39,7 +39,7 @@
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Pasar Buah 88</h1>
+                                        <img src="{{ asset('asset/img/logo.png')}}" width="30%" class="h4 text-gray-900 mb-4">
                                     </div>
                                     @if(session('error'))
                                         <div class="alert alert-danger mt-3" role="alert">
