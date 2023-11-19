@@ -64,7 +64,7 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <button type="submit"  class="btn btn-primary btn-user btn-block">Login</button>
+                                        <button type="submit"  class="btn btn-primary btn-user btn-block">Sig In</button>
                                     </form>
                                     <div class="text-center">
                                     </div>
