@@ -16,7 +16,7 @@ class stok_barang_controller extends Controller
      */
     public function index()
     {
-         $data=stok_barang::paginate(10);
+         $data=stok_barang::paginate(6);
          return view('stok_barang',compact('data'));
     }
 

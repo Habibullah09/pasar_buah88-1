@@ -2,109 +2,93 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Login</title>
-
-    <!-- Custom fonts for this template-->
-    <link href="{{asset('asset/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="{{asset('asset/css/sb-admin-2.min.css')}}" rel="stylesheet">
-    <link href="{{asset('asset/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Pasar Buah 88</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{{asset('asset/vendors/feather/feather.css')}}">
+  <link rel="stylesheet" href="{{asset('asset/vendors/ti-icons/css/themify-icons.css')}}">
+  <link rel="stylesheet" href="{{asset('asset/vendors/css/vendor.bundle.base.css')}}">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="{{asset('asset/vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}">
+  <link rel="stylesheet" href="{{asset('asset/vendors/ti-icons/css/themify-icons.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('asset/js/select.dataTables.min.css')}}">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{{asset('asset/css/vertical-layout-light/style.css')}}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{{asset('asset/images/favicon.png')}}" />
 </head>
 
-<body class="bg-gradient-primary">
-
-    <div class="container">
-
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
-
-            <div class="col-xl-10 col-lg-9 col-md-9">
-
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <img src="{{ asset('asset/img/logo.png')}}" width="30%" class="h4 text-gray-900 mb-4">
-                                    </div>
-                                    @if(session('error'))
-                                        <div class="alert alert-danger mt-3" role="alert">
-                                            {{ session('error') }}
-                                        </div>
-                                    @endif
-                                    <form class="user" action="/postlogin" method="post" >
-                                     @csrf
-                                        <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                name="email" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                name="password" placeholder="Password">
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>
-                                        <button type="submit"  class="btn btn-primary btn-user btn-block">Sig In</button>
-                                    </form>
-                                    <div class="text-center">
-                                    </div>
-                                    <div class="text-center">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+              <center>
+              <div class="brand-logo">
+                <img src="{{asset('asset/images/logo88.png')}}" width="30%" class="h4 text-gray-900 mb-4">
                 </div>
-
+                <h4>Sistem Mutasi Barang</h4>
+                <h6 class="font-weight-light">Masuk untuk melanjutkan</h6>
+                </center>
+                @if(session('error'))
+                    <div class="alert alert-danger mt-3" role="alert">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                <form class="pt-3" action="/postlogin" method="post">
+                @csrf
+                <div class="form-group">
+                  <input type="email" class="form-control form-control-lg" name="email" placeholder="Masukkan Email" required>
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control form-control-lg" name="password"  placeholder="Masukkan Password" required>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label text-muted">
+                      <input type="checkbox" class="form-check-input">
+                      Remember Me
+                    </label>
+                </div>
+                <div class="mt-3">
+                  <button type="submit"  class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Masuk</button>
+                </div>
+                </div>
+              </form>
             </div>
-
+          </div>
         </div>
-
+      </div>
+      <!-- content-wrapper ends -->
     </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="{{asset('asset/vendors/js/vendor.bundle.base.js')}}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="{{asset('asset/vendors/chart.js/Chart.min.js')}}"></script>
+  <script src="{{asset('asset/vendors/datatables.net/jquery.dataTables.js')}}"></script>
+  <script src="{{asset('asset/vendors/datatables.net-bs4/dataTables.bootstrap4.js')}}"></script>
+  <script src="{{asset('asset/js/dataTables.select.min.js')}}"></script>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('asset/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('asset/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="{{asset('asset/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{asset('asset/js/sb-admin-2.min.js')}}"></script>
-
-    <!-- Page level plugins -->
-    <script src="{{asset('asset/vendor/chart.js/Chart.min.js')}}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{asset('asset/js/demo/chart-area-demo.js')}}"></script>
-    <script src="{{asset('asset/js/demo/chart-pie-demo.js')}}"></script>
-    
-    <script src="{{asset('asset/vendor/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('asset/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{asset('asset/js/demo/datatables-demo.js')}}"></script>
-
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="{{asset('asset/js/off-canvas.js')}}"></script>
+  <script src="{{asset('asset/js/hoverable-collapse.js')}}"></script>
+  <script src="{{asset('asset/js/template.js')}}"></script>
+  <script src="{{asset('asset/js/settings.js')}}"></script>
+  <script src="{{asset('asset/js/todolist.js')}}"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{{asset('asset/js/dashboard.js')}}"></script>
+  <script src="{{asset('asset/js/Chart.roundedBarCharts.js')}}"></script>
+  <!-- End custom js for this page-->
 </body>
 
 </html>

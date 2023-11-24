@@ -102,7 +102,7 @@ class akun_controller extends Controller
         $pengguna = User::findorfail($id);
 
         $this->validate($request, [
-            'name' => 'required|min:5',
+            'name' => 'required',
             'email' => 'required|email',
         ]);
 

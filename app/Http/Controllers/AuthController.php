@@ -20,14 +20,18 @@ class AuthController extends Controller
                 if (Auth::user()->role == 'Staff Lapangan' || Auth::user()->role == 'Staff Gudang' || Auth::user()->role == 'Staff IT' || Auth::user()->role == 'Supervisor IT') {
                     return redirect('/dashboard');
                 } else {
-                    return redirect('/login');
+                    return redirect('/login')->with('error', 'email atau password salah!');
                 }
         }
-    return redirect('/login')->with('error', 'email atau password salah!');
+        return redirect('/login')->with('error', 'email atau password salah!');
     }
     public function logout()
     {
         Auth::logout();
         return redirect('/login');
+    }
+    public function login()
+    {
+        return view('login');
     }
 }
