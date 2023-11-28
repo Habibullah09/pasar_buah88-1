@@ -27,14 +27,20 @@ Route::get('/dashboard', function () {
 Route::get('/order', function () {
     return view('lapangan.order');
 });
+Route::get('/', function () {
+    return view('login');
+});
 
 //stok_barang
 Route::resource('/stok_barang', stok_barang_controller::class);
+Route::get('/terima_mutasi', [stok_barang_controller::class,'updateStok']);
+
 
 //mutasi
 Route::resource('/mutasi', mutasi_controller::class);
 Route::post('/updateMutasi', [mutasi_controller::class,'updateMutasiLapangan'])->name('updateMutasiLapangan');
 Route::get('/terimaMutasi', [mutasi_controller::class,'terimaMutasi']);
+
 
 
 //login

@@ -108,7 +108,7 @@
                             </select>
                         </div>
                         <button type="submit" class="btn btn-success mr-2">Submit</button>
-                        <a href="" type="button" class="btn btn-light" >Cancel</a>
+                        <a href="{{ url('akun')}}" type="button" class="btn btn-light" >Cancel</a>
                     </form>
                 </div>
             </div>
