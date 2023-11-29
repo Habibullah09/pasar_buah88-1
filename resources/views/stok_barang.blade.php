@@ -37,7 +37,7 @@
                                     <td>{{ $row->kode }}</td>
                                     <td>{{ $row->nama_stok }}</td>
                                     <td>{!! DNS1D::getBarcodeHTML((string)$row->barcode, 'UPCA', 1.5, 30) !!}
-                                        p- {{ $row->barcode }}
+                                        {{ $row->barcode }}
                                     </td>
                                     <td>{{ $row->qty_lapangan }}</td>
                                     <td>{{ $row->qty_gudang_kecil}}</td>
