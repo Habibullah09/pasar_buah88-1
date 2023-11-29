@@ -77,23 +77,34 @@ class stok_barang_controller extends Controller
     }
     public function updateStok()
     {
-    $mutasiData = DB::table('mutasi')->select('mutasi_id', 'kode', 'jumlah')->where('status','Proses Gudang')->get();
 
-    // Melakukan perulangan untuk mengupdate stok
-    foreach ($mutasiData as $mutasi) {
-        $id = $mutasi->mutasi_id;
-        $kode = $mutasi->kode;
-        $jumlahMutasi = $mutasi->jumlah;
+        $divisi=auth()->user()->role;
+        if($divisi == 'Staff Lapangan'){
+            $status='Proses Lapangan';
+            $status2='Terima Lapangan';
+            $stok='qty_gudang_besar';
+        } else {
+            $status='Proses Gudang';
+            $status2='Terima Gudang';
+            $stok='qty_lapangan';
+        }
+        $mutasiData = DB::table('mutasi')->select('mutasi_id', 'kode', 'jumlah')->where('status',$status)->get();
 
-        // Melakukan update stok
-        DB::table('stok_barang')->where('kode', $kode)
-        ->update(['qty_lapangan' => DB::raw('qty_lapangan - ' . $jumlahMutasi)]);
+        // Melakukan perulangan untuk mengupdate stok
+        foreach ($mutasiData as $mutasi) {
+            $id = $mutasi->mutasi_id;
+            $kode = $mutasi->kode;
+            $jumlahMutasi = $mutasi->jumlah;
 
-        $mutasi = mutasi::where('mutasi_id', $id)->update([
-            'status' => 'Terima Gudang'
-        ]);
-    }
-    return redirect('/terimaMutasi')->with('success','Berhasil Terima Mutasi');
+            // Melakukan update stok
+            DB::table('stok_barang')->where('kode', $kode)
+            ->update([$stok => DB::raw($stok .'-'. $jumlahMutasi)]);
+
+            $mutasi = mutasi::where('mutasi_id', $id)->update([
+                'status' => $status2
+            ]);
+        }
+        return redirect('/terimaMutasi')->with('success','Berhasil Terima Mutasi');
 
     }
 
