@@ -82,7 +82,7 @@ class stok_barang_controller extends Controller
         if($divisi == 'Staff Lapangan'){
             $status='Proses Lapangan';
             $status2='Terima Lapangan';
-            $stok='qty_gudang_besar';
+            $stok='qty_gudang_kecil';
         } else {
             $status='Proses Gudang';
             $status2='Terima Gudang';
