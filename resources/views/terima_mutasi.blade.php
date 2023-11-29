@@ -50,7 +50,9 @@
                             <td>{{ $row->nomer_mutasi }}</td>
                             <td>{{ $row->kode }}</td>
                             <td>{{ $row->nama_stok }}</td>
-                            <td>{{ $row->barcode }}</td>
+                            <td>{!! DNS1D::getBarcodeHTML((string)$row->barcode, 'UPCA',1.5, 30) !!}
+                                p- {{ $row->barcode }}
+                            </td>
                             <td>{{ $row->jumlah}}</td>
                             <td>{{ $row->asal_mutasi }}</td>
                             <td>{{ $row->tujuan_mutasi }}</td>

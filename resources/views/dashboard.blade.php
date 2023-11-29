@@ -38,7 +38,7 @@
         <div class="col-md-6 mb-4 stretch-card transparent">
             <div class="card card-tale">
             <div class="card-body">
-                <p class="mb-4">Total Penjualan</p>
+                <p class="mb-4">Total Mutasi Bulan Ini</p>
                 <p class="fs-30 mb-2">4006</p>
                 <p>Periode Bulan</p>
             </div>
@@ -47,9 +47,9 @@
         <div class="col-md-6 mb-4 stretch-card transparent">
             <div class="card card-dark-blue">
             <div class="card-body">
-                <p class="mb-4">Total Pelanggan</p>
+                <p class="mb-4">Total Mutasi Bulan Lalu</p>
                 <p class="fs-30 mb-2">61344</p>
-                <p>20% Pekanbaru</p>
+                <p>Periode Bulan</p>
             </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
         <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
             <div class="card card-light-blue">
             <div class="card-body">
-                <p class="mb-4">Total Produk</p>
+                <p class="mb-4">Total Stok Gudang</p>
                 <p class="fs-30 mb-2">34040</p>
                 <p>Buah dan Barang Lainnya</p>
             </div>
@@ -67,9 +67,9 @@
         <div class="col-md-6 stretch-card transparent">
             <div class="card card-light-danger">
             <div class="card-body">
-                <p class="mb-4">Total Supplier</p>
-                <p class="fs-30 mb-2">50</p>
-                <p>Kerjasama</p>
+                <p class="mb-4">Total Stok Lapangan</p>
+                <p class="fs-30 mb-2">55679</p>
+                <p>Buah dan Barang Lainnya</p>
             </div>
             </div>
         </div>
