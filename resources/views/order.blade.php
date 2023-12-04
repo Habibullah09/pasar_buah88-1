@@ -15,11 +15,16 @@
         <!-- partial -->
         <div class="row" style="margin-top:-30px">
            <a type="button" class="btn btn-success mb-2 ml-3" data-toggle="modal" data-target="#modalTambah">Tambah Order</a>
-           <a type="button" class="btn btn-warning mb-2 ml-3" data-toggle="modal" data-target="#modalTambah">Kirim Order</a>
+           <a type="button" href="{{url('/kirim_order')}}" class="btn btn-warning mb-2 ml-3" >Kirim Order</a>
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Mutasi Barang</h4>
+                        <h4 class="card-title">Order Barang</h4>
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                     <div class="table-responsive">
                         <table class="table">
                             <tr>
@@ -30,7 +35,7 @@
                                 <th>Qty Lapangan</th>
                                 <th>Qty Gudang Kecil</th>
                                 <th>Qty Order</th>
-                                <th>Status</th>
+                                <th>Status Order</th>
                             </tr>
                             @php
                                 $no = 1;
@@ -44,7 +49,10 @@
                                 <td>{{ $row->qty_lapangan }}</td>
                                 <td>{{ $row->qty_gudang_kecil}}</td>
                                 <td>{{ $row->jumlah }}</td>
-                                <td><label class="badge badge-warning">{{ $row->status }}</label></td>
+                                <td><label class="badge  {{ $row->status_order == 'Pending' ? 'badge-warning' : 
+                                    ($row->status_order == 'Diajukan' ? 'badge-info' : 
+                                    ($row->status_order == 'Selesai' ? 'badge-success' : 'badge-secondary')) 
+                                    }}">{{ $row->status_order }}</label></td>
                             </tr>
                             @endforeach
                         </table>

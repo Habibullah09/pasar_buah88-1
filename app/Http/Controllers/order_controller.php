@@ -18,7 +18,7 @@ class order_controller extends Controller
     {
         $barang=stok_barang::paginate(10);
         $data = order::leftJoin('stok_barang', 'orders.kode', '=', 'stok_barang.kode')
-                ->select('orders.*', 'stok_barang.*')->paginate(25);
+                ->select('orders.*', 'stok_barang.*')->orderBy('orders.id_order', 'desc')->paginate(25);
         return view('order',compact('data','barang'));
     }
 
@@ -40,10 +40,9 @@ class order_controller extends Controller
      */
     public function store(Request $request)
     {
-        $mutasi = order::create([
+        $order = order::create([
             'kode' => $request->kode,
-            'jumlah' => $request->jumlah,
-            'status' => 'Proses Gudang'
+            'jumlah' => $request->jumlah
         ]);
         return redirect()->route('order.index');
     }
@@ -91,5 +90,16 @@ class order_controller extends Controller
     public function destroy($id)
     {
         //
+    }
+
+     public function order()
+    {
+        $order = order::where('status_mutasi', 'Pending')->update([
+            'status_order' => 'Diajukan',
+            'status_mutasi' => 'Proses',
+            'tgl_order' => now()->format('Y-m-d H:i:s')
+        ]);
+
+        return redirect()->route('order.index')->with('success','Berhasil Melakukan Order');
     }
 }

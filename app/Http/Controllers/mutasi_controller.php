@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\mutasi;
 use App\Models\stok_barang;
+use App\Models\order;
 use Illuminate\Support\Facades\DB;
 
 class mutasi_controller extends Controller
@@ -23,10 +24,10 @@ class mutasi_controller extends Controller
             $status='Mutasi Gudang';
         }
         $barang=stok_barang::paginate(30);
-        $data = mutasi::leftJoin('stok_barang', 'mutasi.kode', '=', 'stok_barang.kode')
-                ->select('mutasi.*', 'stok_barang.*')->where('status',$status)
-                ->paginate(5);
-         return view('mutasi',compact('data','barang'));
+        $data = order::leftJoin('stok_barang', 'orders.kode', '=', 'stok_barang.kode')
+                ->select('orders.*', 'stok_barang.*')->where('status_mutasi', '!=', 'Pending')
+                ->orderBy('orders.id_order', 'desc')->paginate(25);
+        return view('mutasi',compact('data','barang'));
     }
     public function terimaMutasi()
     {

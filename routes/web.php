@@ -60,6 +60,8 @@ Route::resource('/akun', akun_controller::class);
 
 //Order Barang
 Route::resource('/order', order_controller::class);
+Route::get('/kirim_order', [order_controller::class,'order']);
+
 
 
 
