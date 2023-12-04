@@ -2,25 +2,27 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Pasar Buah 88</title>
+  @yield('css')
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{asset('asset/vendors/feather/feather.css')}}">
   <link rel="stylesheet" href="{{asset('asset/vendors/ti-icons/css/themify-icons.css')}}">
   <link rel="stylesheet" href="{{asset('asset/vendors/css/vendor.bundle.base.css')}}">
-  <!-- endinject -->
   <!-- Plugin css for this page -->
   <link rel="stylesheet" href="{{asset('asset/vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}">
   <link rel="stylesheet" href="{{asset('asset/vendors/ti-icons/css/themify-icons.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{asset('asset/js/select.dataTables.min.css')}}">
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="{{asset('asset/css/vertical-layout-light/style.css')}}">
-  
-  <!-- endinject -->
-  <link rel="shortcut icon" href="{{asset('asset/images/88icon.png')}}" />
+  <link rel="stylesheet" href="{{asset('asset/js/select.dataTables.min.css')}}">
+  .status-button {
+    padding: 5px 10px;
+    border-radius: 999px;
+    background:green;
+    color:white;
+  }
+  </style>
 </head>
 <body>
   <div class="container-scroller">
@@ -71,21 +73,13 @@
               <span class="menu-title">Order Barang</span>
             </a>
           </li>
+          @endif
           <li class="nav-item">
             <a class="nav-link" href="{{ url('/mutasi') }}">
               <i class="icon-columns menu-icon"></i>
-              <span class="menu-title">Mutasi Lapangan</span>
+              <span class="menu-title">Mutasi</span>
             </a>
           </li>
-          @endif
-          @if(auth()->user()->role == 'Staff Gudang')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('/mutasi') }}">
-              <i class="icon-grid-2 menu-icon"></i>
-              <span class="menu-title">Mutasi Gudang</span>
-            </a>
-          </li>
-          @endif
           @if(auth()->user()->role == 'Staff Gudang' || auth()->user()->role == 'Staff Lapangan')
           <li class="nav-item">
             <a class="nav-link" href="{{ url('/terimaMutasi') }}">
@@ -112,30 +106,25 @@
       @yield('content')
       <!-- main-panel ends -->
   </div>
-  <!-- container-scroller -->
+  @yield('js')
+<!-- External Plugins -->
+<script src="{{asset('asset/vendors/js/vendor.bundle.base.js')}}"></script>
+<script src="{{asset('asset/vendors/chart.js/Chart.min.js')}}"></script>
+<script src="{{asset('asset/vendors/datatables.net/jquery.dataTables.js')}}"></script>
+<script src="{{asset('asset/vendors/datatables.net-bs4/dataTables.bootstrap4.js')}}"></script>
+<script src="{{asset('asset/js/dataTables.select.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js" integrity="sha512-QFzu4/E9RKcqiUkfuaCtPW/9oOPdVtvpo35J8w7eoVDEhP/Boy+T50AnJw34a0gvWPJLcAli8HLMbrppmZBFsA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Internal Plugins -->
+<script src="{{asset('asset/js/off-canvas.js')}}"></script>
+<script src="{{asset('asset/js/hoverable-collapse.js')}}"></script>
+<script src="{{asset('asset/js/template.js')}}"></script>
+<script src="{{asset('asset/js/settings.js')}}"></script>
+<script src="{{asset('asset/js/todolist.js')}}"></script>
 
-  <!-- plugins:js -->
-  <script src="{{asset('asset/vendors/js/vendor.bundle.base.js')}}"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page -->
-  <script src="{{asset('asset/vendors/chart.js/Chart.min.js')}}"></script>
-  <script src="{{asset('asset/vendors/datatables.net/jquery.dataTables.js')}}"></script>
-  <script src="{{asset('asset/vendors/datatables.net-bs4/dataTables.bootstrap4.js')}}"></script>
-  <script src="{{asset('asset/js/dataTables.select.min.js')}}"></script>
+<!-- Custom Scripts -->
+<script src="{{asset('asset/js/dashboard.js')}}"></script>
+<script src="{{asset('asset/js/Chart.roundedBarCharts.js')}}"></script>
 
-  <!-- End plugin js for this page -->
-  <!-- inject:js -->
-  <script src="{{asset('asset/js/off-canvas.js')}}"></script>
-  <script src="{{asset('asset/js/hoverable-collapse.js')}}"></script>
-  <script src="{{asset('asset/js/template.js')}}"></script>
-  <script src="{{asset('asset/js/settings.js')}}"></script>
-  <script src="{{asset('asset/js/todolist.js')}}"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <script src="{{asset('asset/js/dashboard.js')}}"></script>
-  <script src="{{asset('asset/js/Chart.roundedBarCharts.js')}}"></script>
-  <!-- End custom js for this page-->
 </body>
-
 </html>
 

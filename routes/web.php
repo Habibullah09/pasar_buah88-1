@@ -5,6 +5,8 @@ use App\Http\Controllers\stok_barang_controller;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\akun_controller;
 use App\Http\Controllers\mutasi_controller;
+use App\Http\Controllers\order_controller;
+
 
 
 
@@ -34,6 +36,11 @@ Route::get('/', function () {
 //stok_barang
 Route::resource('/stok_barang', stok_barang_controller::class);
 Route::get('/terima_mutasi', [stok_barang_controller::class,'updateStok']);
+Route::get('/getKode', [stok_barang_controller::class,'getKode']);
+Route::get('/getBarcode', [stok_barang_controller::class,'getBarcode']);
+Route::get('/getNama', [stok_barang_controller::class,'getNama']);
+
+
 
 
 //mutasi
@@ -50,6 +57,10 @@ Route::get('/login', [AuthController::class, 'login']);
 
 //stok_barang
 Route::resource('/akun', akun_controller::class);
+
+//Order Barang
+Route::resource('/order', order_controller::class);
+
 
 
 

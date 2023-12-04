@@ -107,7 +107,7 @@
                         </div>
                         <div class="form-group">
                             <label class="d-flex flex-row align-items-center" for="nama">Jumlah Mutasi</label>
-                            <input type="number" class="form-control text-lowercase" id="jumlah"  name="jumlah" placeholder="Jumlah">
+                            <input type="number" class="form-control" id="jumlah"  name="jumlah" placeholder="Jumlah">
                         </div>
                         <button type="submit" class="btn btn-success mr-2">Submit</button>
                         <a href="" class="btn btn-light">Cancel</a>
