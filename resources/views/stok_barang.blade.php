@@ -16,7 +16,14 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Stok Barang</h4>
+                        <div class="d-flex justify-content-between">
+                            <h4 class="card-title">Stok Barang</h4>
+                            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                                <form class="d-flex" action="{{ route('stok_barang.index') }}" method="GET" id="searchForm">
+                                    <input type="text" class="form-control mb-2" placeholder="cari kode, barcode atau nama barang" name="filter" id="filterInput">
+                                </form>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table class="table">
                                 <tr>
@@ -53,4 +60,10 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    document.getElementById('filterInput').addEventListener('input', function () {
+        document.getElementById('searchForm').submit();
+    });
+</script>
 @stop

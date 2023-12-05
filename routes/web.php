@@ -60,6 +60,10 @@ Route::resource('/akun', akun_controller::class);
 //Order Barang
 Route::resource('/order', order_controller::class);
 Route::get('/kirim_order', [order_controller::class,'order']);
+Route::get('/edit_order/{id}', [order_controller::class,'edit']);
+Route::post('/update_order', [order_controller::class,'update']);
+
+
 
 
 

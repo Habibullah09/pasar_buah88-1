@@ -66,7 +66,25 @@ class order_controller extends Controller
      */
     public function edit($id)
     {
-        //
+        $dt = order::leftJoin('stok_barang', 'orders.kode', '=', 'stok_barang.kode')
+            ->select('orders.*', 'stok_barang.*')
+            ->where('orders.id_order', $id)
+            ->first(); 
+
+        $row = array();
+        if ($dt) {
+            $row['data'] = TRUE;
+            $row['kode'] = $dt->kode;
+            $row['barcode'] =  $dt->barcode;
+            $row['nama_stok'] =  $dt->nama_stok;
+            $row['jumlah'] =  $dt->jumlah;
+            $row['id_order'] =  $dt->id_order;
+
+        } else {
+            $row['data'] = FALSE;
+        }
+        echo json_encode($row);
+        die;
     }
 
     /**
@@ -76,9 +94,15 @@ class order_controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $id = $request->id_order;
+
+       DB::table('orders')->where('id_order', $id)->update([
+        'kode' => $request->kode,
+        'jumlah' => $request->jumlah
+        ]);
+        return redirect()->route('order.index')->with('success','Data Order Berhasil di Update');
     }
 
     /**
@@ -89,7 +113,8 @@ class order_controller extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('orders')->where('id_order',$id)->delete();
+        return redirect()->route('order.index')->with('success','Berhasil Menghapus Order');
     }
 
      public function order()

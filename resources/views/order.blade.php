@@ -36,6 +36,7 @@
                                 <th>Qty Gudang Kecil</th>
                                 <th>Qty Order</th>
                                 <th>Status Order</th>
+                                <th>Aksi</th>
                             </tr>
                             @php
                                 $no = 1;
@@ -53,6 +54,18 @@
                                     ($row->status_order == 'Diajukan' ? 'badge-info' : 
                                     ($row->status_order == 'Selesai' ? 'badge-success' : 'badge-secondary')) 
                                     }}">{{ $row->status_order }}</label></td>
+                                <td><a href="javascript:edit('{{ $row->id_order }}')" class="badge badge-info btn-sm">EDIT</a>
+                                <a href="{{ route('order.destroy', $row->id_order) }}"
+                                id="btn-delete-post"
+                                class="badge badge-danger btn-sm"
+                                onclick="event.preventDefault(); if(confirm('Yakin akan menghapus Data?')) { document.getElementById('delete-form-{{$row->id_order}}').submit(); }">
+                                DELETE
+                                </a>
+                                <form id="delete-form-{{$row->id_order}}" action="{{ route('order.destroy', $row->id_order) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('DELETE')
+                                </form>
+                                </td>
                             </tr>
                             @endforeach
                         </table>
@@ -70,8 +83,9 @@
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Tambah Order</h4>
-                        <form action="{{ route('order.store') }}" method="POST" enctype="multipart/form-data">
+                        <h4 class="card-title" id="exampleModalLongTitle">Tambah Order</h4>
+                        <form action="{{ route('order.store') }}" method="POST" enctype="multipart/form-data" id="orderForm">
+                        <input type="hidden" name="id_order" id="id_order" value="">
                         @csrf
                         <div class="form-group" id="barang">
                             <label class="d-flex flex-row align-items-center">
@@ -150,5 +164,76 @@
             }
         });
     });
+    function edit(id) {
+        $('#exampleModalLongTitle').html("Edit Order");
+        $('#orderForm').attr('action', "{{ url('update_order') }}");
+        $.ajax({
+            url: "/edit_order/" + id,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data) {
+                if (data.data == true) {
+                    $('[name="jumlah"]').val(data.jumlah);
+                    $('[name="id_order"]').val(data.id_order);
+                    $('[name="kode"] option[value="' + data.kode + '"]').attr('selected', 'selected');
+                    $('#kode').append(new Option(data.kode + ' - ' + data.barcode + ' - ' + data.nama_stok, data.kode, false, true));
+                    $('.m-select2').select2({width : '100%'});
+                    $('#modalTambah').modal('show');
+
+                    $("#kode").select2({
+                    width: "100%",
+                    closeOnSelect: true,
+                    placeholder: "Cari kode, barcode atau nama barang",
+                    ajax: {
+                        url: "/getKode",
+                        dataType: "json",
+                        type: "GET",
+                        delay: 250,
+                        data: function(e) {
+                            return {
+                                searchtext: e.term,
+                                page: e.page
+                            }
+                        },
+                        processResults: function(e, t) {
+                            $(e.items).each(function() {
+                                this.id = this.kode;
+                                this.text = `${this.kode}`;
+                            });
+
+                            return t.page = t.page || 1, {
+                                results: e.items,
+                            }
+                        },
+                        cache: true
+                    },
+                    escapeMarkup: function (markup) {
+                        return markup;
+                    },
+                    minimumInputLength: 1,
+                    templateResult: function (data) {
+                        if (data.loading) return data.text;
+
+                        var markup =
+                            `<div class='select2-result-repository clearfix'>
+                                <div class='select2-result-repository_meta'>
+                                    <div class='select2-result-repository_title'>
+                                        ${data.kode} - ${data.barcode} - ${data.nama_stok}
+                                    </div>
+                                </div>
+                            </div>`;
+
+                        return markup;
+                    },
+                    templateSelection: function (data) {
+                        return data.text;
+                    }
+                });
+
+                } 
+            },
+            
+        });
+    }
 </script>
 @stop

@@ -15,9 +15,14 @@ class stok_barang_controller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-         $data=stok_barang::paginate(6);
+         $text = $request->filter;
+         $data=stok_barang::where(function ($query) use ($text) {
+                $query->where('kode', 'like', '%' . strtolower($text) . '%')
+                    ->orWhere('nama_stok', 'like', '%' . strtolower($text) . '%')
+                    ->orWhere('barcode', 'like', '%' . strtolower($text) . '%');
+        })->paginate(50);;
          return view('stok_barang',compact('data'));
     }
 
