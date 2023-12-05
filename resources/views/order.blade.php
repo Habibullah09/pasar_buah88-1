@@ -75,30 +75,10 @@
                         @csrf
                         <div class="form-group" id="barang">
                             <label class="d-flex flex-row align-items-center">
-                                Pilih Kode
-                            </label>
-                            <div>
-                                <select class="form-control" name="kode" id="kode">
-                                    <option value=""></option>
-                                </select>
-                            </div>
-                        </div>
-                         <div class="form-group" id="barang">
-                            <label class="d-flex flex-row align-items-center">
-                                Pilih Barcode
-                            </label>
-                            <div>
-                                <select class="form-control" name="barcode" id="barcode">
-                                    <option value=""></option>
-                                </select>
-                            </div>
-                        </div>
-                         <div class="form-group" id="barang">
-                            <label class="d-flex flex-row align-items-center">
                                 Pilih Barang
                             </label>
                             <div>
-                                <select class="form-control" name="nama_stok" id="nama_stok">
+                                <select class="form-control" name="kode" id="kode">
                                     <option value=""></option>
                                 </select>
                             </div>
@@ -123,7 +103,7 @@
         $("#kode").select2({
             width: "100%",
             closeOnSelect: true,
-            placeholder: "Pilih Kode",
+            placeholder: "Cari kode, barcode atau nama barang",
             ajax: {
                 url: "/getKode",
                 dataType: "json",
@@ -158,110 +138,7 @@
                     `<div class='select2-result-repository clearfix'>
                         <div class='select2-result-repository_meta'>
                             <div class='select2-result-repository_title'>
-                                ${data.kode}
-                            </div>
-                        </div>
-                    </div>`;
-
-                return markup;
-            },
-            templateSelection: function (data) {
-                return data.text;
-            }
-        });
-
-        //Search Barcode
-        $("#barcode").select2({
-            width: "100%",
-            closeOnSelect: true,
-            placeholder: "Pilih Barcode",
-            ajax: {
-                url: "/getBarcode",
-                dataType: "json",
-                type: "GET",
-                delay: 250,
-                data: function(e) {
-                    return {
-                        searchtext: e.term,
-                        page: e.page
-                    }
-                },
-                processResults: function(e, t) {
-                    $(e.items).each(function() {
-                        this.id = this.kode;
-                        this.text = `${this.barcode}`;
-                    });
-
-                    return t.page = t.page || 1, {
-                        results: e.items,
-                    }
-                },
-                cache: true
-            },
-            escapeMarkup: function (markup) {
-                return markup;
-            },
-            minimumInputLength: 1,
-            templateResult: function (data) {
-                if (data.loading) return data.text;
-
-                var markup =
-                    `<div class='select2-result-repository clearfix'>
-                        <div class='select2-result-repository_meta'>
-                            <div class='select2-result-repository_title'>
-                                ${data.barcode}
-                            </div>
-                        </div>
-                    </div>`;
-
-                return markup;
-            },
-            templateSelection: function (data) {
-                return data.text;
-            }
-        });
-        
-
-        //Search Nama Stok
-        $("#nama_stok").select2({
-            width: "100%",
-            closeOnSelect: true,
-            placeholder: "Pilih Barang",
-            ajax: {
-                url: "/getNama",
-                dataType: "json",
-                type: "GET",
-                delay: 250,
-                data: function(e) {
-                    return {
-                        searchtext: e.term,
-                        page: e.page
-                    }
-                },
-                processResults: function(e, t) {
-                    $(e.items).each(function() {
-                        this.id = this.kode;
-                        this.text = `${this.nama_stok}`;
-                    });
-
-                    return t.page = t.page || 1, {
-                        results: e.items,
-                    }
-                },
-                cache: true
-            },
-            escapeMarkup: function (markup) {
-                return markup;
-            },
-            minimumInputLength: 1,
-            templateResult: function (data) {
-                if (data.loading) return data.text;
-
-                var markup =
-                    `<div class='select2-result-repository clearfix'>
-                        <div class='select2-result-repository_meta'>
-                            <div class='select2-result-repository_title'>
-                                ${data.nama_stok}
+                                ${data.kode} - ${data.barcode} - ${data.nama_stok}
                             </div>
                         </div>
                     </div>`;
@@ -273,7 +150,5 @@
             }
         });
     });
-    
 </script>
-
 @stop

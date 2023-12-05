@@ -122,43 +122,19 @@ class stok_barang_controller extends Controller
     public function getKode(Request $request)
     {
         $text = $request->searchtext;
-        $barang = stok_barang::select('kode', 'nama_stok')->where('kode', 'like', '%' . strtolower($text) . '%')->get();
-        $output = [];
-        $output['total_data'] = count($barang);
-        
-        foreach ($barang as $list) {
-            $row['kode'] = $list->kode;
-            $row['nama_stok'] = $list->nama_stok;
-            $output['items'][] = $row;
-        }
+        $barang = stok_barang::select('kode', 'nama_stok','barcode')
+            ->where(function ($query) use ($text) {
+                $query->where('kode', 'like', '%' . strtolower($text) . '%')
+                    ->orWhere('nama_stok', 'like', '%' . strtolower($text) . '%')
+                    ->orWhere('barcode', 'like', '%' . strtolower($text) . '%');
+        })->get();
 
-        return response()->json($output);
-    }
-    public function getBarcode(Request $request)
-    {
-        $text = $request->searchtext;
-        $barang = stok_barang::select('kode','barcode', 'nama_stok')->where('barcode', 'like', '%' . strtolower($text) . '%')->get();
         $output = [];
         $output['total_data'] = count($barang);
         
         foreach ($barang as $list) {
             $row['kode'] = $list->kode;
             $row['barcode'] = $list->barcode;
-            $row['nama_stok'] = $list->nama_stok;
-            $output['items'][] = $row;
-        }
-
-        return response()->json($output);
-    }
-    public function getNama(Request $request)
-    {
-        $text = $request->searchtext;
-        $barang = stok_barang::select('kode', 'nama_stok')->where('nama_stok', 'like', '%' . strtolower($text) . '%')->get();
-        $output = [];
-        $output['total_data'] = count($barang);
-        
-        foreach ($barang as $list) {
-            $row['kode'] = $list->kode;
             $row['nama_stok'] = $list->nama_stok;
             $output['items'][] = $row;
         }

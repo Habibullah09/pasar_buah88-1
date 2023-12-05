@@ -37,8 +37,7 @@ Route::get('/', function () {
 Route::resource('/stok_barang', stok_barang_controller::class);
 Route::get('/terima_mutasi', [stok_barang_controller::class,'updateStok']);
 Route::get('/getKode', [stok_barang_controller::class,'getKode']);
-Route::get('/getBarcode', [stok_barang_controller::class,'getBarcode']);
-Route::get('/getNama', [stok_barang_controller::class,'getNama']);
+
 
 
 
