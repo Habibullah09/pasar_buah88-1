@@ -17,17 +17,10 @@ class mutasi_controller extends Controller
      */
     public function index()
     {
-        $divisi=auth()->user()->role;
-        if($divisi == 'Staff Lapangan'){
-            $status='Mutasi Lapangan';
-        } else {
-            $status='Mutasi Gudang';
-        }
-        $barang=stok_barang::paginate(30);
-        $data = order::leftJoin('stok_barang', 'orders.kode', '=', 'stok_barang.kode')
-                ->select('orders.*', 'stok_barang.*')->where('status_mutasi', '!=', 'Pending')
-                ->orderBy('orders.id_order', 'desc')->paginate(25);
-        return view('mutasi',compact('data','barang'));
+       $data = mutasi::leftJoin('orders', 'orders.id_order', '=', 'mutasi.id_order')
+                ->leftJoin('stok_barang', 'orders.kode', '=', 'stok_barang.kode') 
+                ->select('mutasi.*','orders.*', 'stok_barang.*')->orderBy('orders.id_order', 'desc')->paginate(25);
+       return view('mutasi',compact('data'));
     }
     public function terimaMutasi()
     {

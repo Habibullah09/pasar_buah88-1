@@ -20,7 +20,7 @@
                             <h4 class="card-title">Stok Barang</h4>
                             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
                                 <form class="d-flex" action="{{ route('stok_barang.index') }}" method="GET" id="searchForm">
-                                    <input type="text" class="form-control mb-2" placeholder="cari kode, barcode atau nama barang" name="filter" id="filterInput">
+                                    <input type="text" class="form-control mb-2" placeholder="cari kode, barcode atau nama barang" name="filter" id="filterInput" value="{{ app('request')->input('filter') }}">
                                 </form>
                             </div>
                         </div>
@@ -62,7 +62,20 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    document.getElementById('filterInput').addEventListener('input', function () {
+   document.getElementById('searchForm').addEventListener('submit', function () {
+        var filterInput = document.getElementById('filterInput');
+        localStorage.setItem('savedFilter', filterInput.value);
+    });
+
+    // Mendapatkan nilai input teks saat halaman dimuat
+    var filterInput = document.getElementById('filterInput');
+    var savedFilter = localStorage.getItem('savedFilter');
+    if (savedFilter) {
+        filterInput.value = savedFilter;
+    }
+
+    // Mengirimkan formulir saat nilai input berubah
+    filterInput.addEventListener('input', function () {
         document.getElementById('searchForm').submit();
     });
 </script>

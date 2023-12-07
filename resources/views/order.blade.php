@@ -12,10 +12,31 @@
                 </div>
             </div>
         </div>
+        <div class="row" style="margin-top:-30px">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div style="display:flex;">
+                            <div class="form-group">
+                                <label for="nama">Nomer Order</label>
+                                <input type="text" class="form-control" id="nomer_mutasi" required name="nomer_mutasi" value="{{ $no_order }}" disabled>
+                            </div>
+                            <div class="form-group" style="margin-left:20px">
+                                <label for="nama">Tanggal Order</label>
+                                <input type="date" class="form-control" id="tanggal" required name="tanggal"  value="{{ date('Y-m-d') }}" disabled>
+                            </div>
+                            <div class="form-group" style="margin-left:20px;margin-top:30px">
+                                <a type="button" href="{{url('/kirim_order')}}" class="btn btn-warning mr-2">Kirim Order</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- partial -->
         <div class="row" style="margin-top:-30px">
-           <a type="button" class="btn btn-success mb-2 ml-3" data-toggle="modal" data-target="#modalTambah">Tambah Order</a>
-           <a type="button" href="{{url('/kirim_order')}}" class="btn btn-warning mb-2 ml-3" >Kirim Order</a>
+           <a type="button" class="btn btn-success mb-2 ml-3" data-toggle="modal" data-target="#modalTambah">Tambah Barang</a>
+           <!-- <a type="button" href="{{url('/kirim_order')}}" class="btn btn-warning mb-2 ml-3" >Kirim Order</a> -->
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
@@ -25,13 +46,18 @@
                                 {{ session('success') }}
                             </div>
                         @endif
+                        @if(session('error'))
+                            <div class="alert alert-danger mt-3" role="alert">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                     <div class="table-responsive">
                         <table class="table">
                             <tr>
                                 <th>No</th>
                                 <th>Kode</th>
-                                <th>Nama Stok</th>
                                 <th>Barcode</th>
+                                <th>Keterangan</th>
                                 <th>Qty Lapangan</th>
                                 <th>Qty Gudang Kecil</th>
                                 <th>Qty Order</th>
@@ -45,8 +71,8 @@
                             <tr>
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $row->kode }}</td>
-                                <td>{{ $row->nama_stok }}</td>
                                 <td>{{ $row->barcode }}</td>
+                                <td>{{ $row->nama_stok }}</td>
                                 <td>{{ $row->qty_lapangan }}</td>
                                 <td>{{ $row->qty_gudang_kecil}}</td>
                                 <td>{{ $row->jumlah }}</td>
@@ -54,12 +80,12 @@
                                     ($row->status_order == 'Diajukan' ? 'badge-info' : 
                                     ($row->status_order == 'Selesai' ? 'badge-success' : 'badge-secondary')) 
                                     }}">{{ $row->status_order }}</label></td>
-                                <td><a href="javascript:edit('{{ $row->id_order }}')" class="badge badge-info btn-sm">EDIT</a>
+                                <td><a href="javascript:edit('{{ $row->id_order }}')" class="badge badge-info btn-sm">Edit</a>
                                 <a href="{{ route('order.destroy', $row->id_order) }}"
                                 id="btn-delete-post"
                                 class="badge badge-danger btn-sm"
                                 onclick="event.preventDefault(); if(confirm('Yakin akan menghapus Data?')) { document.getElementById('delete-form-{{$row->id_order}}').submit(); }">
-                                DELETE
+                                Delete
                                 </a>
                                 <form id="delete-form-{{$row->id_order}}" action="{{ route('order.destroy', $row->id_order) }}" method="POST" style="display: none;">
                                 @csrf

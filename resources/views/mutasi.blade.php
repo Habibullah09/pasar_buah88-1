@@ -25,6 +25,7 @@
                         <table class="table">
                             <tr>
                                 <th>No</th>
+                                <th>No Order</th>
                                 <th>Kode</th>
                                 <th>Nama Stok</th>
                                 <th>Barcode</th>
@@ -32,6 +33,7 @@
                                 <th>Qty Gudang Kecil</th>
                                 <th>Qty Order</th>
                                 <th>Tanggal Order</th>
+                                <th>Qty Mutasi</th>
                                 <th>Status Mutasi</th>
                             </tr>
                             @if(auth()->user()->role == 'Staff Gudang')
@@ -41,6 +43,7 @@
                             @foreach($data as $row)
                             <tr>
                                 <td>{{ $no++ }}</td>
+                                <td>OR-{{ $row->no_order }}</td>
                                 <td>{{ $row->kode }}</td>
                                 <td>{{ $row->nama_stok }}</td>
                                 <td>{{ $row->barcode }}</td>
@@ -48,7 +51,11 @@
                                 <td>{{ $row->qty_gudang_kecil}}</td>
                                 <td>{{ $row->jumlah }}</td>
                                 <td>{{ $row->tgl_order }}</td>
-                                <td><label class="badge badge-warning">{{ $row->status_mutasi }}</label></td>
+                                <td>{{ $row->jumlah_mutasi }}</td>
+                                <td><label class="badge  {{ $row->status_mutasi == 'Pending' ? 'badge-warning' : 
+                                    ($row->status_mutasi == 'Diajukan' ? 'badge-info' : 
+                                    ($row->status_mutasi == 'Selesai' ? 'badge-success' : 'badge-secondary')) 
+                                    }}">{{ $row->status_mutasi }}</label></td>
                             </tr>
                             @endforeach
                             @endif
