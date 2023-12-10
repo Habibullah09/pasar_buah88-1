@@ -33,6 +33,7 @@
                                 <th>Qty Gudang Kecil</th>
                                 <th>Qty Order</th>
                                 <th>Tanggal Order</th>
+                                <th>Request By</th>
                                 <th>Qty Mutasi</th>
                                 <th>Status Mutasi</th>
                             </tr>
@@ -51,6 +52,7 @@
                                 <td>{{ $row->qty_gudang_kecil}}</td>
                                 <td>{{ $row->jumlah }}</td>
                                 <td>{{ $row->tgl_order }}</td>
+                                <td>{{ $row->name }}</td>
                                 <td>{{ $row->jumlah_mutasi }}</td>
                                 <td><label class="badge  {{ $row->status_mutasi == 'Pending' ? 'badge-warning' : 
                                     ($row->status_mutasi == 'Diajukan' ? 'badge-info' : 

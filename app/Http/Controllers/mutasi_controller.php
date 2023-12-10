@@ -17,9 +17,12 @@ class mutasi_controller extends Controller
      */
     public function index()
     {
-       $data = mutasi::leftJoin('orders', 'orders.id_order', '=', 'mutasi.id_order')
-                ->leftJoin('stok_barang', 'orders.kode', '=', 'stok_barang.kode') 
-                ->select('mutasi.*','orders.*', 'stok_barang.*')->orderBy('orders.id_order', 'desc')->paginate(25);
+       $data = mutasi::leftJoin('orders as o', 'o.id_order', '=', 'mutasi.id_order')
+        ->leftJoin('stok_barang as sb', 'o.kode', '=', 'sb.kode')
+        ->leftJoin('users as u', 'o.user_id', '=', 'u.id')
+        ->select('mutasi.*', 'o.*', 'sb.*', 'u.*')
+        ->orderBy('o.id_order', 'desc')
+        ->paginate(25);
        return view('mutasi',compact('data'));
     }
     public function terimaMutasi()

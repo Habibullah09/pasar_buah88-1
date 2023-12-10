@@ -7,6 +7,7 @@ use App\Models\order;
 use App\Models\mutasi;
 use App\Models\stok_barang;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\RomanNumeralConverter;
 
 class order_controller extends Controller
 {
@@ -15,25 +16,33 @@ class order_controller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(RomanNumeralConverter $converter)
     {
         $barang=stok_barang::paginate(10);
-        $data = order::leftJoin('stok_barang', 'orders.kode', '=', 'stok_barang.kode')
-                ->select('orders.*', 'stok_barang.*')->orderBy('orders.id_order', 'desc')->paginate(25);
+       $data = Order::leftJoin('stok_barang', 'orders.kode', '=', 'stok_barang.kode')
+                ->leftJoin('users', 'users.id', '=', 'orders.user_id')
+                ->select('orders.*', 'stok_barang.*', 'users.*')
+                ->orderBy('orders.id_order', 'desc')
+                ->paginate(25);
         $no = Order::select('no_order')
         ->where('status_order', 'Diajukan')
         ->orderBy('id_order', 'desc')
         ->limit(1)
         ->first();
-    
+        $month                 = date('m');
+        $tahun                 = date('Y');
+        $romawi = $converter->convert($month);
         if ($no) {
             $order= $no->no_order;
-            $no_order = 'OR-'.($order + 1);
+            $pecah = explode("/",  $order);
+            $seq = $pecah[1];
+            $no_order = $seq + 1;
         } else {
-            $no_order = 'OR-1';
+            $no_order = 1;
         }
+        $noorder = 'OR/'.sprintf("%04s", $no_order) . '/' . $romawi . '/' . $tahun; 
         // dd($no_order);
-        return view('order',compact('data','barang','no_order'));
+        return view('order',compact('data','barang','noorder'));
     }
 
     /**
@@ -54,9 +63,11 @@ class order_controller extends Controller
      */
     public function store(Request $request)
     {
+        $user=auth()->user()->id;
         $order = order::create([
             'kode' => $request->kode,
-            'jumlah' => $request->jumlah
+            'jumlah' => $request->jumlah,
+            'user_id' => $user
         ]);
         return redirect()->route('order.index');
     }
@@ -131,7 +142,7 @@ class order_controller extends Controller
         return redirect()->route('order.index')->with('success','Berhasil Menghapus Order');
     }
 
-     public function order()
+     public function order(RomanNumeralConverter $converter)
     {
         $data = order::where('status_order','Pending')->get();
         if($data->count() > 0){        
@@ -140,20 +151,23 @@ class order_controller extends Controller
             ->orderBy('id_order', 'desc')
             ->limit(1)
             ->first();
-
+            $month                 = date('m');
+            $tahun                 = date('Y');
+            $romawi = $converter->convert($month);
             if ($no) {
                 $order= $no->no_order;
-                $no_order = ($order+ 1);
+                $pecah = explode("/",  $order);
+                $seq = $pecah[1];
+                $no_order = $seq + 1;
             } else {
                 $no_order = 1;
             }
-
+            $noorder = 'OR/'.sprintf("%04s", $no_order) . '/' . $romawi . '/' . $tahun; 
             $order = order::where('status_order', 'Pending')->update([
                 'status_order' => 'Diajukan',
-                'no_order' => $no_order,
+                'no_order' => $noorder,
                 'tgl_order' => now()->format('Y-m-d H:i:s')
             ]);
-
 
             //Insert Mutasi
             $pengajuan_order = order::where('status_order','Diajukan')->get();

@@ -19,7 +19,7 @@
                         <div style="display:flex;">
                             <div class="form-group">
                                 <label for="nama">Nomer Order</label>
-                                <input type="text" class="form-control" id="nomer_mutasi" required name="nomer_mutasi" value="{{ $no_order }}" disabled>
+                                <input type="text" class="form-control" id="nomer_mutasi" required name="nomer_mutasi" value="{{ $noorder }}" disabled>
                             </div>
                             <div class="form-group" style="margin-left:20px">
                                 <label for="nama">Tanggal Order</label>
@@ -35,7 +35,7 @@
         </div>
         <!-- partial -->
         <div class="row" style="margin-top:-30px">
-           <a type="button" class="btn btn-success mb-2 ml-3" data-toggle="modal" data-target="#modalTambah">Tambah Barang</a>
+           <a type="button" class="btn btn-success mb-2 ml-3" data-toggle="modal" data-target="#modalTambah">Tambah Order</a>
            <!-- <a type="button" href="{{url('/kirim_order')}}" class="btn btn-warning mb-2 ml-3" >Kirim Order</a> -->
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
@@ -61,6 +61,7 @@
                                 <th>Qty Lapangan</th>
                                 <th>Qty Gudang Kecil</th>
                                 <th>Qty Order</th>
+                                <th>Request By</th>
                                 <th>Status Order</th>
                                 <th>Aksi</th>
                             </tr>
@@ -76,6 +77,7 @@
                                 <td>{{ $row->qty_lapangan }}</td>
                                 <td>{{ $row->qty_gudang_kecil}}</td>
                                 <td>{{ $row->jumlah }}</td>
+                                <td>{{ $row->name }}</td>
                                 <td><label class="badge  {{ $row->status_order == 'Pending' ? 'badge-warning' : 
                                     ($row->status_order == 'Diajukan' ? 'badge-info' : 
                                     ($row->status_order == 'Selesai' ? 'badge-success' : 'badge-secondary')) 
