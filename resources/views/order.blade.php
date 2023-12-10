@@ -129,8 +129,8 @@
                             <label class="d-flex flex-row align-items-center" for="nama">Jumlah Order</label>
                             <input type="number" class="form-control" id="jumlah"  name="jumlah" placeholder="Jumlah">
                         </div>
-                        <button type="submit" class="btn btn-success mr-2">Submit</button>
-                        <a href="" class="btn btn-light">Cancel</a>
+                        <button type="button" class="btn btn-success mr-2" id="btnSimpan">Simpan</button>
+                        <a href="" class="btn btn-light">Keluar</a>
                         </form>
                     </div>
                 </div>
@@ -190,6 +190,21 @@
             templateSelection: function (data) {
                 return data.text;
             }
+        });
+        $('#btnSimpan').on('click', function () {
+            $.ajax({
+                url: "{{ route('order.store') }}",
+                method: "POST",
+                data: $('#orderForm').serialize(), 
+                success: function (response) {
+                    $('#orderForm')[0].reset();
+                    $('#kode').val('').trigger('change');
+                },
+                error: function (error) {
+                    alert('Gagal menyimpan data!');
+                }
+            });
+            $('#modalTambah').modal('show');
         });
     });
     function edit(id) {

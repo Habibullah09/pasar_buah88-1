@@ -69,7 +69,7 @@ class order_controller extends Controller
             'jumlah' => $request->jumlah,
             'user_id' => $user
         ]);
-        return redirect()->route('order.index');
+        return response()->json();
     }
 
     /**

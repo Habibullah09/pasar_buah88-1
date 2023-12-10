@@ -16,11 +16,21 @@
           @if(auth()->user()->role == 'Staff Lapangan')
            <a type="button" class="btn btn-success mb-2 ml-3" data-toggle="modal" data-target="#modalTambah">Tambah Mutasi</a>
           @endif
-           <a type="button" class="btn btn-warning mb-2 ml-3" data-toggle="modal" data-target="#modalTambah">Kirim Mutasi</a>
+           <a type="button" href="{{url('/kirim_mutasi')}}" class="btn btn-warning mb-2 ml-3">Kirim Mutasi</a>
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Mutasi Barang</h4>
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        @if(session('error'))
+                            <div class="alert alert-danger mt-3" role="alert">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                     <div class="table-responsive">
                         <table class="table">
                             <tr>
@@ -36,6 +46,7 @@
                                 <th>Request By</th>
                                 <th>Qty Mutasi</th>
                                 <th>Status Mutasi</th>
+                                <th>Aksi</th>
                             </tr>
                             @if(auth()->user()->role == 'Staff Gudang')
                             @php
@@ -44,7 +55,7 @@
                             @foreach($data as $row)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>OR-{{ $row->no_order }}</td>
+                                <td>{{ $row->no_order }}</td>
                                 <td>{{ $row->kode }}</td>
                                 <td>{{ $row->nama_stok }}</td>
                                 <td>{{ $row->barcode }}</td>
@@ -55,18 +66,59 @@
                                 <td>{{ $row->name }}</td>
                                 <td>{{ $row->jumlah_mutasi }}</td>
                                 <td><label class="badge  {{ $row->status_mutasi == 'Pending' ? 'badge-warning' : 
-                                    ($row->status_mutasi == 'Diajukan' ? 'badge-info' : 
-                                    ($row->status_mutasi == 'Selesai' ? 'badge-success' : 'badge-secondary')) 
+                                    ($row->status_mutasi == 'Dikirim' ? 'badge-info' : 
+                                    ($row->status_mutasi == 'Diterima' ? 'badge-success' : 'badge-secondary')) 
                                     }}">{{ $row->status_mutasi }}</label></td>
+                                <td><a href="{{ route('mutasi.edit', $row->id_mutasi) }}" class="badge badge-info">EDIT</a></td>
                             </tr>
-                            @endforeach
-                            @endif
+                        @endforeach
                         </table>
                     {{ $data->links() }}
+                    @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!-- Modal Tambah Mutasi -->
+<div class="modal fade" id="modalTambah" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title" id="exampleModalLongTitle">Tambah Qty Mutasi</h4>
+                        <form action="{{ isset($mutasi) ? route('mutasi.update', ['mutasi' => $mutasi->id_mutasi]) : '' }}" method="POST" enctype="multipart/form-data">
+                        @method('PUT')
+                        @csrf
+                        <div class="form-group">
+                            <label class="d-flex flex-row align-items-center" for="nama">Barang</label>
+                            <input type="text" class="form-control" value="{{ isset($mutasi) ? $mutasi->kode . ' - ' . $mutasi->barcode . ' - ' . $mutasi->nama_stok : '' }}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="d-flex flex-row align-items-center" for="nama">Jumlah Order</label>
+                            <input type="number" class="form-control" value="{{ isset($mutasi)? $mutasi->jumlah : ''}}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="d-flex flex-row align-items-center" for="nama">Jumlah Mutasi</label>
+                            <input type="number" class="form-control" id="jumlah"  name="jumlah" placeholder="Jumlah Mutasi">
+                        </div>
+                        <button type="submit" class="btn btn-success mr-2">Simpan</button>
+                        <a href="" class="btn btn-light">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        @if(isset($mutasi))
+        $('#modalTambah').modal('show');
+        @endif
+    });
+</script>
 @stop

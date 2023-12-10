@@ -27,17 +27,12 @@ class mutasi_controller extends Controller
     }
     public function terimaMutasi()
     {
-        $divisi=auth()->user()->role;
-        if($divisi == 'Staff Lapangan'){
-            $status='Proses Lapangan';
-        } else {
-            $status='Proses Gudang';
-        }
-        $barang=stok_barang::paginate(30);
-        $data = mutasi::leftJoin('stok_barang', 'mutasi.kode', '=', 'stok_barang.kode')
-                ->select('mutasi.*', 'stok_barang.*')->where('status',$status)
-                ->paginate(5);
-         return view('terima_mutasi',compact('data','barang'));
+       $data = mutasi::leftJoin('orders as o', 'o.id_order', '=', 'mutasi.id_order')
+        ->leftJoin('stok_barang as sb', 'o.kode', '=', 'sb.kode')
+        ->leftJoin('users as u', 'o.user_id', '=', 'u.id')
+        ->select('mutasi.*', 'o.*', 'sb.*', 'u.*')->where('status_mutasi','Dikirim')
+        ->paginate(25);
+         return view('terima_mutasi',compact('data'));
     }
 
     /**
@@ -98,7 +93,18 @@ class mutasi_controller extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = mutasi::leftJoin('orders as o', 'o.id_order', '=', 'mutasi.id_order')
+        ->leftJoin('stok_barang as sb', 'o.kode', '=', 'sb.kode')
+        ->leftJoin('users as u', 'o.user_id', '=', 'u.id')
+        ->select('mutasi.*', 'o.*', 'sb.*', 'u.*')
+        ->orderBy('o.id_order', 'desc')
+        ->paginate(25);
+        $mutasi = mutasi::leftJoin('orders as o', 'o.id_order', '=', 'mutasi.id_order')
+        ->leftJoin('stok_barang as sb', 'o.kode', '=', 'sb.kode')
+        ->leftJoin('users as u', 'o.user_id', '=', 'u.id')
+        ->select('mutasi.*', 'o.*', 'sb.*', 'u.*')->where('id_mutasi',$id)
+        ->first();
+       return view('mutasi',compact('mutasi','data'));
     }
 
     /**
@@ -108,9 +114,12 @@ class mutasi_controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-    
+        DB::table('mutasi')->where('id_mutasi',$id)->update([
+                'jumlah_mutasi' => $request->jumlah
+        ]);
+        return redirect()->route('mutasi.index')->with('success','Berhasil Menambahkan Qty Mutasi');
     }
 
     public function updateMutasiLapangan(Request $request)
@@ -143,5 +152,19 @@ class mutasi_controller extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function mutasi()
+    {
+        $data = mutasi::where('status_mutasi','Pending')->get();
+        if($data){
+            DB::table('mutasi')->where('status_mutasi','Pending')->update([
+                'status_mutasi' => "Dikirim",
+                'tgl_mutasi' => now()->format('Y-m-d')
+            ]);
+            return redirect()->route('mutasi.index')->with('success','Berhasil Melakukan Mutasi');
+        } else {
+            return redirect()->route('mutasi.index')->with('error','Belum ada Order yang Akan di Mutasi');
+        }
     }
 }

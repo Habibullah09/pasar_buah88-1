@@ -29,36 +29,42 @@
                         @endif
                         <div class="table-responsive">
                         <table class="table">
-                        <tr>
-                            <th>No</th>
-                            <th>Nomer Mutasi</th>
-                            <th>Kode</th>
-                            <th>Nama Stok</th>
-                            <th>Barcode</th>
-                            <th>Jumlah Mutasi</th>
-                            <th>Asal Mutasi</th>
-                            <th>Tujuan Mutasi</th>
-                            <th>Tanggal Mutasi</th>
-                            <th>Keterangan</th>
-                        </tr>
-                        @php
-                            $no = 1;
-                        @endphp
-                        @foreach($data as $row)
-                        <tr>
-                            <td>{{ $no++ }}</td>
-                            <td>{{ $row->nomer_mutasi }}</td>
-                            <td>{{ $row->kode }}</td>
-                            <td>{{ $row->nama_stok }}</td>
-                            <td>{!! DNS1D::getBarcodeHTML((string)$row->barcode, 'UPCA',1.5, 30) !!}
-                                {{ $row->barcode }}
-                            </td>
-                            <td>{{ $row->jumlah}}</td>
-                            <td>{{ $row->asal_mutasi }}</td>
-                            <td>{{ $row->tujuan_mutasi }}</td>
-                            <td>{{ $row->tanggal }}</td>
-                            <td>{{ $row->keterangan }}</td>
-                        </tr>
+                        <table class="table">
+                            <tr>
+                                <th>No</th>
+                                <th>No Order</th>
+                                <th>Kode</th>
+                                <th>Nama Stok</th>
+                                <th>Barcode</th>
+                                <th>Qty Lapangan</th>
+                                <th>Qty Gudang Kecil</th>
+                                <th>Qty Order</th>
+                                <th>Tanggal Order</th>
+                                <th>Request By</th>
+                                <th>Qty Mutasi</th>
+                                <th>Status Mutasi</th>
+                            </tr>
+                            @php
+                                $no = 1;
+                            @endphp
+                            @foreach($data as $row)
+                            <tr>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $row->no_order }}</td>
+                                <td>{{ $row->kode }}</td>
+                                <td>{{ $row->nama_stok }}</td>
+                                <td>{{ $row->barcode }}</td>
+                                <td>{{ $row->qty_lapangan }}</td>
+                                <td>{{ $row->qty_gudang_kecil}}</td>
+                                <td>{{ $row->jumlah }}</td>
+                                <td>{{ $row->tgl_order }}</td>
+                                <td>{{ $row->name }}</td>
+                                <td>{{ $row->jumlah_mutasi }}</td>
+                                <td><label class="badge  {{ $row->status_mutasi == 'Pending' ? 'badge-warning' : 
+                                    ($row->status_mutasi == 'Dikirim' ? 'badge-info' : 
+                                    ($row->status_mutasi == 'Diterima' ? 'badge-success' : 'badge-secondary')) 
+                                    }}">{{ $row->status_mutasi }}</label></td>
+                            </tr>
                         @endforeach
                         </table>
                     {{ $data->links() }}

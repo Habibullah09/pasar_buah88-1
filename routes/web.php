@@ -46,6 +46,8 @@ Route::get('/getKode', [stok_barang_controller::class,'getKode']);
 Route::resource('/mutasi', mutasi_controller::class);
 Route::post('/updateMutasi', [mutasi_controller::class,'updateMutasiLapangan'])->name('updateMutasiLapangan');
 Route::get('/terimaMutasi', [mutasi_controller::class,'terimaMutasi']);
+Route::get('/kirim_mutasi', [mutasi_controller::class,'mutasi']);
+
 
 
 
