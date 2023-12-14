@@ -105,7 +105,7 @@
                             <input type="number" class="form-control" id="jumlah"  name="jumlah" placeholder="Jumlah Mutasi">
                         </div>
                         <button type="submit" class="btn btn-success mr-2">Simpan</button>
-                        <a href="" class="btn btn-light">Cancel</a>
+                        <a href="/mutasi" class="btn btn-light">Cancel</a>
                         </form>
                     </div>
                 </div>

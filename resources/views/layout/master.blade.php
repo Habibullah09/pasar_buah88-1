@@ -72,17 +72,29 @@
               <i class="icon-layout menu-icon"></i>
               <span class="menu-title">Order Barang</span>
             </a>
-          </li>
-          @endif
-          <li class="nav-item">
+            <li class="nav-item">
             <a class="nav-link" href="{{ url('/mutasi_lapangan') }}">
-              <i class="icon-columns menu-icon"></i>
+              <i class="icon-paper menu-icon"></i>
               <span class="menu-title">Mutasi</span>
             </a>
           </li>
-          @if(auth()->user()->role == 'Staff Gudang' || auth()->user()->role == 'Staff Lapangan')
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" href="{{ url('/terimaMutasi') }}">
+              <i class="icon-columns menu-icon"></i>
+              <span class="menu-title">Terima Mutasi</span>
+            </a>
+          </li>
+          @endif
+          @if(auth()->user()->role == 'Staff Gudang')
           <li class="nav-item">
-            <a class="nav-link" href="{{ url('/terima_mutasi_lp') }}">
+            <a class="nav-link" href="{{ url('/mutasi') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Mutasi</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('/terimaMutasi_lp') }}">
               <i class="icon-paper menu-icon"></i>
               <span class="menu-title">Terima Mutasi</span>
             </a>

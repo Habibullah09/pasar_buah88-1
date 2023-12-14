@@ -74,7 +74,7 @@ Route::resource('/mutasi_lapangan', mutasi_lp_controller::class);
 Route::get('/edit_mutasi/{id}', [mutasi_lp_controller::class,'edit']);
 Route::post('/update_mutasi_lp', [mutasi_lp_controller::class,'update']);
 Route::get('/kirim_mutasi_lp', [mutasi_lp_controller::class,'mutasi']);
-Route::get('/terima_mutasi_lp', [mutasi_lp_controller::class,'terimaMutasi']);
+Route::get('/terimaMutasi_lp', [mutasi_lp_controller::class,'terimaMutasi']);
 Route::get('/confirm', [mutasi_lp_controller::class,'confirm']);
 
 
