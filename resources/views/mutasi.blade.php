@@ -16,7 +16,7 @@
           @if(auth()->user()->role == 'Staff Lapangan')
            <a type="button" class="btn btn-success mb-2 ml-3" data-toggle="modal" data-target="#modalTambah">Tambah Mutasi</a>
           @endif
-           <a type="button" href="{{url('/kirim_mutasi')}}" class="btn btn-warning mb-2 ml-3">Kirim Mutasi</a>
+           <a type="button" href="{{url('/kirim_mutasi')}}" class="btn btn-success mb-2 ml-3">Kirim Mutasi</a>
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">

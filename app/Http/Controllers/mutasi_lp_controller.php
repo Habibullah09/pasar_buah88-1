@@ -169,9 +169,9 @@ class mutasi_lp_controller extends Controller
             DB::table('mutasi_lapangan')->where('status_mutasi','Dikirim')->whereNotNull('terima_mutasi')->update([
                 'status_mutasi' => "Diterima",
             ]);
-            return redirect('/terima_mutasi_lp')->with('success','Berhasil Terima Mutasi');
+            return redirect('/terimaMutasi_lp')->with('success','Berhasil Terima Mutasi');
         } else {
-            return redirect('/terima_mutasi_lp')->with('error','Belum ada Mutasi yang Akan di Terima atau Pastikan Qty Terima Mutasi Sudah Anda Isi');
+            return redirect('/terimaMutasi_lp')->with('error','Belum ada Mutasi yang Akan di Terima atau Pastikan Qty Terima Mutasi Sudah Anda Isi');
         }
         
     }
