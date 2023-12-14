@@ -35,7 +35,7 @@
         </div>
         <!-- partial -->
         <div class="row" style="margin-top:-30px">
-           <a type="button" class="btn btn-success mb-2 ml-3" data-toggle="modal" data-target="#modalTambah">Tambah Order</a>
+           <a type="button" class="btn btn-success mb-2 ml-3" onclick="add_ajax()">Tambah Order</a>
            <!-- <a type="button" href="{{url('/kirim_order')}}" class="btn btn-warning mb-2 ml-3" >Kirim Order</a> -->
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
@@ -82,7 +82,12 @@
                                     ($row->status_order == 'Diajukan' ? 'badge-info' : 
                                     ($row->status_order == 'Selesai' ? 'badge-success' : 'badge-secondary')) 
                                     }}">{{ $row->status_order }}</label></td>
-                                <td><a href="javascript:edit('{{ $row->id_order }}')" class="badge badge-info btn-sm">Edit</a>
+                                <td>
+                                @if($row->status_order == 'Pending')
+                                    <a href="javascript:edit('{{ $row->id_order }}')" class="badge badge-info btn-sm">Edit</a>
+                                @else
+                                    -
+                                @endif
                                 <a href="{{ route('order.destroy', $row->id_order) }}"
                                 id="btn-delete-post"
                                 class="badge badge-danger btn-sm"
@@ -112,7 +117,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title" id="exampleModalLongTitle">Tambah Order</h4>
-                        <form action="{{ route('order.store') }}" method="POST" enctype="multipart/form-data" id="orderForm">
+                        <form action="" method="POST" enctype="multipart/form-data" id="orderForm">
                         <input type="hidden" name="id_order" id="id_order" value="">
                         @csrf
                         <div class="form-group" id="barang">
@@ -129,7 +134,7 @@
                             <label class="d-flex flex-row align-items-center" for="nama">Jumlah Order</label>
                             <input type="number" class="form-control" id="jumlah"  name="jumlah" placeholder="Jumlah">
                         </div>
-                        <button type="button" class="btn btn-success mr-2" id="btnSimpan">Simpan</button>
+                        <a href="#" onclick="save()" id="btnSaveAjax" class="btn btn-success mr-2">Simpan</a>
                         <a href="" class="btn btn-light">Keluar</a>
                         </form>
                     </div>
@@ -141,6 +146,7 @@
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type="text/javascript">
+    var method = '';
     $(document).ready(function () {
         $("#kode").select2({
             width: "100%",
@@ -191,25 +197,10 @@
                 return data.text;
             }
         });
-        $('#btnSimpan').on('click', function () {
-            $.ajax({
-                url: "{{ route('order.store') }}",
-                method: "POST",
-                data: $('#orderForm').serialize(), 
-                success: function (response) {
-                    $('#orderForm')[0].reset();
-                    $('#kode').val('').trigger('change');
-                },
-                error: function (error) {
-                    alert('Gagal menyimpan data!');
-                }
-            });
-            $('#modalTambah').modal('show');
-        });
     });
     function edit(id) {
         $('#exampleModalLongTitle').html("Edit Order");
-        $('#orderForm').attr('action', "{{ url('update_order') }}");
+        method = "{{ url('update_order') }}";
         $.ajax({
             url: "/edit_order/" + id,
             type: "GET",
@@ -277,6 +268,25 @@
             },
             
         });
+    }
+    function save() {
+        $.ajax({
+                url: method,
+                method: "POST",
+                data: $('#orderForm').serialize(), 
+                success: function (response) {
+                    $('#orderForm')[0].reset();
+                    $('#kode').val('').trigger('change');
+                },
+                error: function (error) {
+                    alert('Gagal menyimpan data!');
+                }
+            });
+        $('#modalTambah').modal('show');
+    }
+    function add_ajax() {
+        method = "{{ route('order.store') }}";
+        $('#modalTambah').modal('show');
     }
 </script>
 @stop

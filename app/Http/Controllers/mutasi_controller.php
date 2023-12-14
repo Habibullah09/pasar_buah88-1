@@ -30,7 +30,7 @@ class mutasi_controller extends Controller
        $data = mutasi::leftJoin('orders as o', 'o.id_order', '=', 'mutasi.id_order')
         ->leftJoin('stok_barang as sb', 'o.kode', '=', 'sb.kode')
         ->leftJoin('users as u', 'o.user_id', '=', 'u.id')
-        ->select('mutasi.*', 'o.*', 'sb.*', 'u.*')->where('status_mutasi','Dikirim')
+        ->select('mutasi.*', 'o.*', 'sb.*', 'u.*')->where('status_mutasi','!=','Pending')
         ->paginate(25);
          return view('terima_mutasi',compact('data'));
     }
@@ -156,15 +156,59 @@ class mutasi_controller extends Controller
 
     public function mutasi()
     {
-        $data = mutasi::where('status_mutasi','Pending')->get();
-        if($data){
-            DB::table('mutasi')->where('status_mutasi','Pending')->update([
+        $mutasiData = mutasi::leftJoin('orders as o', 'o.id_order', '=', 'mutasi.id_order')
+        ->leftJoin('stok_barang as sb', 'o.kode', '=', 'sb.kode')
+        ->select('mutasi.*', 'o.*', 'sb.*')
+        ->where('status_mutasi','Pending')
+        ->whereNotNull('mutasi.jumlah_mutasi')->get();
+        foreach ($mutasiData as $mutasi) {
+            $id = $mutasi->id_mutasi;
+            $kode = $mutasi->kode;
+            $jumlahMutasi = $mutasi->jumlah_mutasi;
+            $stok='qty_gudang_kecil';
+            $jumlah='qty_lapangan';
+
+            // Melakukan update stok
+            DB::table('stok_barang')->where('kode', $kode)->update([
+                $stok => DB::raw($stok . '-' . $jumlahMutasi),
+                $jumlah => DB::raw($jumlah . '+' . $jumlahMutasi)
+            ]);
+        }
+        $data = mutasi::where('status_mutasi', 'Pending')->whereNotNull('jumlah_mutasi')->get();
+        if($data->count() > 0){
+            DB::table('mutasi')->where('status_mutasi','Pending')->whereNotNull('mutasi.jumlah_mutasi')->update([
+                'status_mutasi' => "Dikirim",
+                'tgl_mutasi' => now()->format('Y-m-d')
+            ]);
+             DB::table('mutasi')->where('status_mutasi','Pending')->whereNotNull('mutasi.jumlah_mutasi')->update([
                 'status_mutasi' => "Dikirim",
                 'tgl_mutasi' => now()->format('Y-m-d')
             ]);
             return redirect()->route('mutasi.index')->with('success','Berhasil Melakukan Mutasi');
         } else {
-            return redirect()->route('mutasi.index')->with('error','Belum ada Order yang Akan di Mutasi');
+            return redirect()->route('mutasi.index')->with('error','Belum ada Order yang Akan di Mutasi Atau Pastikan Qty Mutasi Sudah Anda Isi');
         }
+        
+    }
+    public function updateMutasi()
+    {
+        $data = mutasi::leftJoin('orders', 'orders.id_order', '=', 'mutasi.id_order')
+        ->where('mutasi.status_mutasi', 'Dikirim')->whereNotNull('orders.terima_mutasi')->get();
+        if($data->count() > 0){
+            DB::table('mutasi')->where('status_mutasi','Dikirim')->update([
+                'status_mutasi' => "Diterima",
+            ]);
+            DB::table('orders')
+                ->leftJoin('mutasi', 'mutasi.id_order', '=', 'orders.id_order')
+                ->where('mutasi.status_mutasi', 'Diterima')
+                ->where('orders.status_order', 'Diajukan')
+                ->update([
+                    'orders.status_order' => 'Selesai'
+                ]);
+            return redirect('/terimaMutasi')->with('success','Berhasil Melakukan Mutasi');
+        } else {
+            return redirect('/terimaMutasi')->with('error','Belum ada Mutasi yang Akan di Terima atau Pastikan Qty Terima Mutasi Sudah Anda Isi');
+        }
+        
     }
 }

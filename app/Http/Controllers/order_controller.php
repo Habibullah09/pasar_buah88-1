@@ -92,7 +92,8 @@ class order_controller extends Controller
     public function edit($id)
     {
         $dt = order::leftJoin('stok_barang', 'orders.kode', '=', 'stok_barang.kode')
-            ->select('orders.*', 'stok_barang.*')
+            ->leftJoin('mutasi', 'mutasi.id_order', '=', 'orders.id_order')
+            ->select('orders.*', 'stok_barang.*', 'mutasi.*')
             ->where('orders.id_order', $id)
             ->first(); 
 
@@ -103,7 +104,9 @@ class order_controller extends Controller
             $row['barcode'] =  $dt->barcode;
             $row['nama_stok'] =  $dt->nama_stok;
             $row['jumlah'] =  $dt->jumlah;
-            $row['id_order'] =  $dt->id_order;
+            $row['jumlah_mutasi'] =  $dt->jumlah_mutasi;
+            $row['id_order'] =  $id;
+
 
         } else {
             $row['data'] = FALSE;
@@ -122,11 +125,18 @@ class order_controller extends Controller
     public function update(Request $request)
     {
         $id = $request->id_order;
-
-       DB::table('orders')->where('id_order', $id)->update([
-        'kode' => $request->kode,
-        'jumlah' => $request->jumlah
-        ]);
+        $terima = $request->terima_mutasi;
+      
+        if($terima){
+            DB::table('orders')->where('id_order', $id)->update([
+            'terima_mutasi' => $terima
+            ]);
+        } else{
+            DB::table('orders')->where('id_order', $id)->update([
+            'kode' => $request->kode,
+            'jumlah' => $request->jumlah
+            ]);
+        }
         return redirect()->route('order.index')->with('success','Data Order Berhasil di Update');
     }
 

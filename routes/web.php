@@ -35,7 +35,6 @@ Route::get('/', function () {
 
 //stok_barang
 Route::resource('/stok_barang', stok_barang_controller::class);
-Route::get('/terima_mutasi', [stok_barang_controller::class,'updateStok']);
 Route::get('/getKode', [stok_barang_controller::class,'getKode']);
 
 
@@ -47,6 +46,7 @@ Route::resource('/mutasi', mutasi_controller::class);
 Route::post('/updateMutasi', [mutasi_controller::class,'updateMutasiLapangan'])->name('updateMutasiLapangan');
 Route::get('/terimaMutasi', [mutasi_controller::class,'terimaMutasi']);
 Route::get('/kirim_mutasi', [mutasi_controller::class,'mutasi']);
+Route::get('/terima_mutasi', [mutasi_controller::class,'updateMutasi']);
 
 
 
@@ -64,6 +64,7 @@ Route::resource('/order', order_controller::class);
 Route::get('/kirim_order', [order_controller::class,'order']);
 Route::get('/edit_order/{id}', [order_controller::class,'edit']);
 Route::post('/update_order', [order_controller::class,'update']);
+
 
 
 
