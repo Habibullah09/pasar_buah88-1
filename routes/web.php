@@ -6,6 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\akun_controller;
 use App\Http\Controllers\mutasi_controller;
 use App\Http\Controllers\order_controller;
+use App\Http\Controllers\mutasi_lp_controller;
+
 
 
 
@@ -36,6 +38,8 @@ Route::get('/', function () {
 //stok_barang
 Route::resource('/stok_barang', stok_barang_controller::class);
 Route::get('/getKode', [stok_barang_controller::class,'getKode']);
+Route::get('/getLapangan', [stok_barang_controller::class,'getLapangan']);
+
 
 
 
@@ -64,6 +68,19 @@ Route::resource('/order', order_controller::class);
 Route::get('/kirim_order', [order_controller::class,'order']);
 Route::get('/edit_order/{id}', [order_controller::class,'edit']);
 Route::post('/update_order', [order_controller::class,'update']);
+
+//mutasi_lapangan
+Route::resource('/mutasi_lapangan', mutasi_lp_controller::class);
+Route::get('/edit_mutasi/{id}', [mutasi_lp_controller::class,'edit']);
+Route::post('/update_mutasi_lp', [mutasi_lp_controller::class,'update']);
+Route::get('/kirim_mutasi_lp', [mutasi_lp_controller::class,'mutasi']);
+Route::get('/terima_mutasi_lp', [mutasi_lp_controller::class,'terimaMutasi']);
+Route::get('/confirm', [mutasi_lp_controller::class,'confirm']);
+
+
+
+
+
 
 
 

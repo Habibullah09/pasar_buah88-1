@@ -18,7 +18,7 @@ class order_controller extends Controller
      */
     public function index(RomanNumeralConverter $converter)
     {
-        $barang=stok_barang::paginate(10);
+       $barang=stok_barang::paginate(10);
        $data = Order::leftJoin('stok_barang', 'orders.kode', '=', 'stok_barang.kode')
                 ->leftJoin('users', 'users.id', '=', 'orders.user_id')
                 ->select('orders.*', 'stok_barang.*', 'users.*')
@@ -195,4 +195,5 @@ class order_controller extends Controller
         }
 
     }
+
 }

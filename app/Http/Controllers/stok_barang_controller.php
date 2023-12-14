@@ -146,4 +146,12 @@ class stok_barang_controller extends Controller
 
         return response()->json($output);
     }
+    public function getLapangan(Request $request)
+    {
+
+        $kode=$request->kode;
+        $barang = stok_barang::where('kode', $kode)->value('qty_lapangan');
+        $data['stok'] = $barang;
+        die(json_encode(['success' => true, 'data' => $data]));
+    }
 }
