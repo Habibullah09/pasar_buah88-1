@@ -72,14 +72,14 @@
               <i class="icon-layout menu-icon"></i>
               <span class="menu-title">Order Barang</span>
             </a>
-            <li class="nav-item">
+          </i>
+          <li class="nav-item">
             <a class="nav-link" href="{{ url('/mutasi_lapangan') }}">
               <i class="icon-paper menu-icon"></i>
               <span class="menu-title">Mutasi</span>
             </a>
           </li>
-          </li>
-           <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link" href="{{ url('/terimaMutasi') }}">
               <i class="icon-columns menu-icon"></i>
               <span class="menu-title">Terima Mutasi</span>
@@ -99,13 +99,27 @@
               <span class="menu-title">Terima Mutasi</span>
             </a>
           </li>
+          @endif
+          @if(auth()->user()->role == 'Staff IT')
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('/order') }}">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Order Barang</span>
+            </a>
+          </i>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('/terimaMutasi') }}">
+              <i class="icon-columns menu-icon"></i>
+              <span class="menu-title">Terima Mutasi</span>
+            </a>
+          </li>
+          @endif
           <li class="nav-item">
             <a class="nav-link" href="{{ url('/stok_barang') }}">
               <i class="icon-contract menu-icon"></i>
               <span class="menu-title">Stok Barang</span>
             </a>
           </li>
-          @endif
           <li class="nav-item">
             <a class="nav-link" href="{{ url('/akun') }}">
               <i class="icon-head menu-icon"></i>

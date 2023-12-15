@@ -12,6 +12,7 @@
                 </div>
             </div>
         </div>
+        @if(auth()->user()->role == 'Staff Lapangan')
         <div class="row" style="margin-top:-30px">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
@@ -33,10 +34,12 @@
                 </div>
             </div>
         </div>
+        @endif
         <!-- partial -->
         <div class="row" style="margin-top:-30px">
-           <a type="button" class="btn btn-success mb-2 ml-3" onclick="add_ajax()">Tambah Order</a>
-           <!-- <a type="button" href="{{url('/kirim_order')}}" class="btn btn-warning mb-2 ml-3" >Kirim Order</a> -->
+            @if(auth()->user()->role == 'Staff Lapangan')
+            <a type="button" class="btn btn-success mb-2 ml-3" onclick="add_ajax()">Tambah Order</a>
+            @endif
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">

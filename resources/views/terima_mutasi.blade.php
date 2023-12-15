@@ -16,7 +16,9 @@
         <div class="row" style="margin-top:-50px">
             <div class="form-group" style="margin-left:20px">
                 <label class="d-flex flex-row align-items-center" for="nama">&nbsp;</label>
+                @if(auth()->user()->role == 'Staff Lapangan')
                 <a type="button" href="{{url('/terima_mutasi')}}" class="btn btn-success mr-2">Terima Mutasi</a>
+                @endif
             </div>
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
