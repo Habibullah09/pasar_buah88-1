@@ -22,7 +22,7 @@ class stok_barang_controller extends Controller
                 $query->where('kode', 'like', '%' . strtolower($text) . '%')
                     ->orWhere('nama_stok', 'like', '%' . strtolower($text) . '%')
                     ->orWhere('barcode', 'like', '%' . strtolower($text) . '%');
-        })->paginate(50);;
+        })->paginate(50);
          return view('stok_barang',compact('data'));
     }
 
