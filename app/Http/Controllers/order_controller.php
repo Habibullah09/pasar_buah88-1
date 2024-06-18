@@ -71,7 +71,7 @@ class order_controller extends Controller
         ]);
         return response()->json();
     }
-    //halo
+
     /**
      * Display the specified resource.
      *
